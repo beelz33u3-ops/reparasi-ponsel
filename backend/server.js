@@ -174,4 +174,12 @@ app.delete('/api/orders/:id', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`Repair API running on port ${PORT}`));
+// Jalankan server HANYA jika bukan di environment Vercel (production)
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Repair API running on port ${PORT}`);
+    });
+}
+
+// Export app untuk Vercel Serverless
+module.exports = app;

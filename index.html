@@ -240,7 +240,8 @@
             listEl.innerHTML = '<p style="text-align:center; color:#aaa;">Memuat pesanan...</p>';
             
             try {
-                const res = await fetch('http://localhost:3001/api/my-orders?username=' + userName);
+                const apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') ? 'http://localhost:3001' : '';
+                const res = await fetch(`${apiBase}/api/my-orders?username=` + userName);
                 const orders = await res.json();
                 
                 if(orders.length === 0) {

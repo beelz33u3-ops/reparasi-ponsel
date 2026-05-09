@@ -57,7 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // Simpan ke database (opsional)
-                const response = await fetch('http://localhost:3001/api/orders', {
+                const apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') ? 'http://localhost:3001' : '';
+                const response = await fetch(`${apiBase}/api/orders`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(orderData)
