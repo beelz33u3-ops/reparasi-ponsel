@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const db = require('./database');
 const nodemailer = require('nodemailer');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = 'rahmatfix-super-secret-key-2026';
