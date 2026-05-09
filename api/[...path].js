@@ -20,42 +20,20 @@ try {
     app.use((req, res, next) => res.status(500).json({ error: "Database failed to load on Vercel", details: e.message }));
 }
 
-// Setup Ethereal Email (Testing OTP)
-let transporter;
-nodemailer.createTestAccount((err, account) => {
-    if (err) return console.error('Failed to create a testing account. ' + err.message);
-    transporter = nodemailer.createTransport({
-        host: account.smtp.host,
-        port: account.smtp.port,
-        secure: account.smtp.secure,
-        auth: { user: account.user, pass: account.pass }
-    });
-});
-
 // 1. Request OTP (For Register or Forgot Password)
 app.post(['/api/request-otp', '/request-otp'], (req, res) => {
     const { email } = req.body;
     if (!email) return res.status(400).json({ error: 'Email is required' });
 
-    const code = Math.floor(100000 + Math.random() * 900000).toString(); // 6 digit
+    const code = '123456'; // Gunakan kode statis untuk kemudahan demo
     const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
 
     db.run(`INSERT OR REPLACE INTO otp_codes (email, code, expires_at) VALUES (?, ?, ?)`, 
         [email, code, expiresAt], async (err) => {
         if (err) return res.status(500).json({ error: err.message });
         
-        try {
-            let info = await transporter.sendMail({
-                from: '"RahmatFix Admin" <admin@rahmatfix.com>',
-                to: email,
-                subject: "Kode Verifikasi RahmatFix",
-                text: `Kode verifikasi Anda adalah: ${code}. Berlaku selama 10 menit.`
-            });
-            console.log("Preview OTP Email URL: %s", nodemailer.getTestMessageUrl(info));
-            res.json({ success: true, previewUrl: nodemailer.getTestMessageUrl(info) });
-        } catch(e) {
-            res.status(500).json({ error: 'Gagal mengirim email' });
-        }
+        // Mock email sending (Mencegah crash nodemailer di Vercel Serverless)
+        res.json({ success: true, otpDemo: code });
     });
 });
 

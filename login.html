@@ -248,7 +248,12 @@
                 const res = await fetch(API + '/request-otp', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email})});
                 const data = await res.json();
                 if(res.ok) {
-                    msgEl.style.color = '#25D366'; msgEl.innerHTML = `Kode terkirim! <br><a href="${data.previewUrl}" target="_blank" style="color:#0095f6; font-size:12px;">Buka Email Verifikasi</a>`;
+                    if (data.otpDemo) {
+                        alert("MODE DEMO VERCEL: Gunakan kode OTP ini: " + data.otpDemo);
+                        msgEl.style.color = '#25D366'; msgEl.innerHTML = `Kode OTP terkirim! Silakan cek notifikasi.`;
+                    } else {
+                        msgEl.style.color = '#25D366'; msgEl.innerHTML = `Kode terkirim! <br><a href="${data.previewUrl}" target="_blank" style="color:#0095f6; font-size:12px;">Buka Email Verifikasi</a>`;
+                    }
                     return true;
                 } else { msgEl.style.color = '#ed4956'; msgEl.innerText = data.error || 'Gagal mengirim email'; return false; }
             } catch(e) { msgEl.style.color = '#ed4956'; msgEl.innerText = 'Gagal terhubung ke server.'; return false; }
