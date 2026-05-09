@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const db = require('./database');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -10,6 +9,16 @@ const JWT_SECRET = 'rahmatfix-super-secret-key-2026';
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+app.get(['/api/ping', '/ping'], (req, res) => res.json({ status: 'ok', msg: 'Express boot successful!' }));
+
+let db;
+try {
+    db = require('./database');
+} catch(e) {
+    console.error("DB LOAD ERROR", e);
+    app.use((req, res, next) => res.status(500).json({ error: "Database failed to load on Vercel", details: e.message }));
+}
 
 // Setup Ethereal Email (Testing OTP)
 let transporter;
