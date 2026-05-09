@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - RahmatFix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            margin: 0; padding: 0; 
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a24 100%); 
+            color: #fafafa; 
+            font-family: 'Roboto', sans-serif; 
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-wrapper {
+            width: 100%;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .auth-card { 
+            background: #000000; 
+            padding: 40px; 
+            border: 1px solid #363636; 
+            border-radius: 1px; 
+            text-align: center;
+        }
+
+        .brand-logo {
+            font-family: 'Pacifico', cursive;
+            font-size: 36px;
+            color: #fafafa;
+            margin: 0 0 35px 0;
+            font-weight: normal;
+        }
+
+        .auth-form input { 
+            width: 100%; 
+            padding: 12px 10px; 
+            margin-bottom: 15px; 
+            background: #121212; 
+            color: #fafafa; 
+            border: 1px solid #363636; 
+            border-radius: 4px; 
+            box-sizing: border-box; 
+            font-size: 14px;
+        }
+
+        .auth-form input:focus {
+            outline: none;
+            border-color: #a8a8a8;
+        }
+
+        .btn-primary { 
+            width: 100%; 
+            padding: 10px; 
+            background: #0095f6; 
+            color: #ffffff; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: 500; 
+            cursor: pointer; 
+            margin-bottom: 20px;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover { background: #1877f2; }
+        
+        .btn-secondary {
+            width: 100%; 
+            padding: 10px; 
+            background: transparent; 
+            color: #e0e0e0; 
+            border: 1px solid #363636; 
+            border-radius: 8px; 
+            font-weight: 500; 
+            cursor: pointer; 
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #8e8e8e;
+            font-size: 13px;
+            font-weight: 500;
+            margin: 15px 0 25px 0;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #363636;
+        }
+
+        .divider:not(:empty)::before { margin-right: .5em; }
+        .divider:not(:empty)::after { margin-left: .5em; }
+
+        .forgot-link {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 12px;
+            display: block;
+            margin-top: 15px;
+        }
+
+        .bottom-card {
+            background: #000000;
+            padding: 20px;
+            border: 1px solid #363636;
+            border-radius: 1px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .bottom-card a {
+            color: #0095f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        #auth-msg, #reg-msg, #forgot-msg {
+            color: #ed4956; 
+            font-size: 14px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-wrapper">
+        
+        <!-- ======================= -->
+        <!-- 1. KOTAK LOGIN          -->
+        <!-- ======================= -->
+        <div id="login-view">
+            <div class="auth-card">
+                <h1 class="brand-logo">RahmatFix</h1>
+                <form id="login-form" class="auth-form">
+                    <input type="text" id="login-user" placeholder="Nomor telepon, nama pengguna, atau email" required>
+                    <input type="password" id="login-pass" placeholder="Kata sandi" required>
+                    
+                    <button type="submit" class="btn-primary">Masuk</button>
+                    
+                    <div class="divider">ATAU</div>
+                    
+                    <a href="#" id="link-forgot" class="forgot-link">Lupa kata sandi?</a>
+                    <p id="auth-msg"></p>
+                </form>
+            </div>
+            
+            <!-- Kotak Bawah Login -->
+            <div class="bottom-card" style="margin-top:15px;">
+                <span>Belum punya akun?</span> <a href="#" id="link-register">Buat akun</a>
+            </div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- 2. KOTAK REGISTER       -->
+        <!-- ======================= -->
+        <div id="register-view" style="display:none;">
+            <div class="auth-card">
+                <h1 class="brand-logo" style="margin-bottom: 20px;">RahmatFix</h1>
+                <p style="color:#8e8e8e; font-size:16px; font-weight:500; margin-bottom:20px;">Daftar untuk memesan layanan reparasi HP.</p>
+                
+                <form id="register-form" class="auth-form">
+                    <input type="email" id="reg-email" placeholder="Alamat Email Terdaftar" required>
+                    <button type="button" id="btn-req-otp-reg" class="btn-secondary">Minta Kode Verifikasi</button>
+                    
+                    <div class="divider">LANJUTKAN</div>
+
+                    <div id="reg-step-2" style="display:none;">
+                        <input type="text" id="reg-otp" placeholder="Kode OTP 6 Digit dari Email" required>
+                        <input type="password" id="reg-pass" placeholder="Buat Kata Sandi" required>
+                        <button type="submit" class="btn-primary">Selesaikan Pendaftaran</button>
+                    </div>
+                    <p id="reg-msg"></p>
+                </form>
+            </div>
+
+            <!-- Kotak Bawah Register -->
+            <div class="bottom-card" style="margin-top:15px;">
+                <span>Punya akun?</span> <a href="#" id="link-back-login1">Masuk</a>
+            </div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- 3. KOTAK LUPA PASSWORD  -->
+        <!-- ======================= -->
+        <div id="forgot-view" style="display:none;">
+            <div class="auth-card">
+                <div style="font-size:50px; margin-bottom:15px;">🔒</div>
+                <h2 style="margin:0 0 10px 0; font-size:16px;">Kesulitan saat masuk?</h2>
+                <p style="color:#8e8e8e; font-size:14px; margin-bottom:20px;">Masukkan email Anda dan kami akan mengirimkan tautan untuk kembali ke akun Anda.</p>
+                
+                <form id="forgot-form" class="auth-form">
+                    <input type="email" id="forgot-email" placeholder="Alamat Email" required>
+                    <button type="button" id="btn-req-otp-forgot" class="btn-primary">Kirim Kode Otentikasi</button>
+                    
+                    <div class="divider">ATAU</div>
+
+                    <div id="forgot-step-2" style="display:none;">
+                        <input type="text" id="forgot-otp" placeholder="Kode OTP 6 Digit" required>
+                        <input type="password" id="forgot-pass" placeholder="Kata Sandi Baru" required>
+                        <button type="submit" class="btn-primary" style="background:#25D366;">Simpan Kata Sandi</button>
+                    </div>
+
+                    <p id="forgot-msg"></p>
+                </form>
+            </div>
+
+            <!-- Kotak Bawah Forgot -->
+            <div class="bottom-card" style="margin-top:15px; border-top: 1px solid #363636;">
+                <a href="#" id="link-back-login2" style="color:#fafafa;">Kembali ke halaman masuk</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Sesuaikan dengan URL server backend saat di-deploy
+        const API = 'http://localhost:3001/api';
+        
+        const authMsg = document.getElementById('auth-msg');
+        const regMsg = document.getElementById('reg-msg');
+        const forgotMsg = document.getElementById('forgot-msg');
+
+        // Navigasi Form UI
+        document.getElementById('link-register').onclick = (e) => { e.preventDefault(); document.getElementById('login-view').style.display='none'; document.getElementById('register-view').style.display='block'; }
+        document.getElementById('link-forgot').onclick = (e) => { e.preventDefault(); document.getElementById('login-view').style.display='none'; document.getElementById('forgot-view').style.display='block'; }
+        document.getElementById('link-back-login1').onclick = (e) => { e.preventDefault(); document.getElementById('register-view').style.display='none'; document.getElementById('login-view').style.display='block'; }
+        document.getElementById('link-back-login2').onclick = (e) => { e.preventDefault(); document.getElementById('forgot-view').style.display='none'; document.getElementById('login-view').style.display='block'; }
+
+        // Minta OTP
+        async function requestOTP(email, msgEl) {
+            msgEl.style.color = '#8e8e8e'; msgEl.innerText = 'Mengirim kode verifikasi...';
+            try {
+                const res = await fetch(API + '/request-otp', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email})});
+                const data = await res.json();
+                if(res.ok) {
+                    msgEl.style.color = '#25D366'; msgEl.innerHTML = `Kode terkirim! <br><a href="${data.previewUrl}" target="_blank" style="color:#0095f6; font-size:12px;">Buka Email Verifikasi</a>`;
+                    return true;
+                } else { msgEl.style.color = '#ed4956'; msgEl.innerText = data.error || 'Gagal mengirim email'; return false; }
+            } catch(e) { msgEl.style.color = '#ed4956'; msgEl.innerText = 'Gagal terhubung ke server.'; return false; }
+        }
+
+        // Action Buttons
+        document.getElementById('btn-req-otp-reg').onclick = async () => {
+            const em = document.getElementById('reg-email').value;
+            if(!em) return regMsg.innerText = 'Mohon isi email terlebih dahulu.';
+            if(await requestOTP(em, regMsg)) document.getElementById('reg-step-2').style.display = 'block';
+        };
+
+        document.getElementById('btn-req-otp-forgot').onclick = async () => {
+            const em = document.getElementById('forgot-email').value;
+            if(!em) return forgotMsg.innerText = 'Mohon isi email terlebih dahulu.';
+            if(await requestOTP(em, forgotMsg)) document.getElementById('forgot-step-2').style.display = 'block';
+        };
+
+        // Submit Register
+        document.getElementById('register-form').onsubmit = async (e) => {
+            e.preventDefault();
+            regMsg.style.color = '#8e8e8e'; regMsg.innerText = 'Memproses...';
+            try {
+                const res = await fetch(API + '/register', { method:'POST', headers:{'Content-Type':'application/json'}, 
+                body:JSON.stringify({ email: document.getElementById('reg-email').value, otp: document.getElementById('reg-otp').value, password: document.getElementById('reg-pass').value })});
+                const data = await res.json();
+                if(res.ok) { 
+                    regMsg.style.color = '#25D366'; 
+                    regMsg.innerText = 'Pendaftaran berhasil! Silakan Masuk.'; 
+                } else { regMsg.style.color = '#ed4956'; regMsg.innerText = data.error; }
+            } catch(e) { regMsg.style.color='#ed4956'; regMsg.innerText='Error server.'; }
+        };
+
+        // Submit Forgot Pass
+        document.getElementById('forgot-form').onsubmit = async (e) => {
+            e.preventDefault();
+            forgotMsg.style.color = '#8e8e8e'; forgotMsg.innerText = 'Memproses...';
+            try {
+                const res = await fetch(API + '/reset-password', { method:'POST', headers:{'Content-Type':'application/json'}, 
+                body:JSON.stringify({ email: document.getElementById('forgot-email').value, otp: document.getElementById('forgot-otp').value, newPassword: document.getElementById('forgot-pass').value })});
+                const data = await res.json();
+                if(res.ok) { forgotMsg.style.color = '#25D366'; forgotMsg.innerText = 'Kata sandi diperbarui! Silakan kembali ke halaman masuk.'; }
+                else { forgotMsg.style.color = '#ed4956'; forgotMsg.innerText = data.error; }
+            } catch(e) { forgotMsg.style.color='#ed4956'; forgotMsg.innerText='Error server.'; }
+        };
+
+        // Submit Login
+        document.getElementById('login-form').onsubmit = async (e) => {
+            e.preventDefault();
+            authMsg.style.color = '#8e8e8e'; authMsg.innerText = 'Memverifikasi...';
+            try {
+                const userVal = document.getElementById('login-user').value;
+                const res = await fetch(API + '/login', { method:'POST', headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({ username: userVal, password: document.getElementById('login-pass').value }) });
+                const data = await res.json();
+                
+                if(res.ok) { 
+                    localStorage.setItem('userToken', data.token);
+                    localStorage.setItem('userRole', data.role);
+                    localStorage.setItem('userName', userVal);
+                    
+                    if(data.role === 'admin') {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                }
+                else { authMsg.style.color = '#ed4956'; authMsg.innerText = 'Maaf, kata sandi Anda salah. Harap periksa kembali.'; }
+            } catch(e) { authMsg.style.color = '#ed4956'; authMsg.innerText = 'Gagal terhubung ke server.'; }
+        };
+    </script>
+</body>
+</html>
