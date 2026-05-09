@@ -3,5 +3,8 @@
     "api/**/*.js": {
       "includeFiles": "repair.sqlite"
     }
-  }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.js" }
+  ]
 }
