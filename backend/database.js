@@ -1,7 +1,19 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
-const db = new sqlite3.Database(path.resolve(__dirname, 'repair.sqlite'));
+const fs = require('fs');
 
+let dbPath = path.resolve(__dirname, 'repair.sqlite');
+
+// Vercel Serverless Functions have a read-only filesystem except for /tmp
+if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
+    const tmpPath = path.join('/tmp', 'repair.sqlite');
+    if (!fs.existsSync(tmpPath) && fs.existsSync(dbPath)) {
+        fs.copyFileSync(dbPath, tmpPath);
+    }
+    dbPath = tmpPath;
+}
+
+const db = new sqlite3.Database(dbPath);
 db.serialize(() => {
     db.run(`CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY,
