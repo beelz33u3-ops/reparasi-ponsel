@@ -24,7 +24,7 @@ nodemailer.createTestAccount((err, account) => {
 });
 
 // 1. Request OTP (For Register or Forgot Password)
-app.post('/api/request-otp', (req, res) => {
+app.post(['/api/request-otp', '/request-otp'], (req, res) => {
     const { email } = req.body;
     if (!email) return res.status(400).json({ error: 'Email is required' });
 
@@ -51,7 +51,7 @@ app.post('/api/request-otp', (req, res) => {
 });
 
 // 2. Register with OTP
-app.post('/api/register', (req, res) => {
+app.post(['/api/register', '/register'], (req, res) => {
     const { email, password, otp } = req.body;
     
     db.get(`SELECT * FROM otp_codes WHERE email = ? AND code = ?`, [email, otp], async (err, row) => {
@@ -70,7 +70,7 @@ app.post('/api/register', (req, res) => {
 });
 
 // 3. Reset Password with OTP
-app.post('/api/reset-password', (req, res) => {
+app.post(['/api/reset-password', '/reset-password'], (req, res) => {
     const { email, newPassword, otp } = req.body;
     
     db.get(`SELECT * FROM otp_codes WHERE email = ? AND code = ?`, [email, otp], async (err, row) => {
@@ -88,7 +88,7 @@ app.post('/api/reset-password', (req, res) => {
 });
 
 // User/Admin Login
-app.post('/api/login', (req, res) => {
+app.post(['/api/login', '/login'], (req, res) => {
     const { username, password } = req.body;
     db.get(`SELECT id, role, password FROM users WHERE username = ? OR email = ?`, [username, username], async (err, user) => {
         if (!user) return res.status(401).json({ error: 'Username atau email tidak ditemukan' });
@@ -102,7 +102,7 @@ app.post('/api/login', (req, res) => {
 });
 
 // Create Order (From Landing Page)
-app.post('/api/orders', (req, res) => {
+app.post(['/api/orders', '/orders'], (req, res) => {
     const { customer_name, phone, service_type, issue_desc, username } = req.body;
     
     // Look up user_id if username is provided
@@ -125,7 +125,7 @@ app.post('/api/orders', (req, res) => {
 });
 
 // Get User's Own Orders
-app.get('/api/my-orders', (req, res) => {
+app.get(['/api/my-orders', '/my-orders'], (req, res) => {
     const { username } = req.query;
     db.get(`SELECT id FROM users WHERE username = ? OR email = ?`, [username, username], (err, user) => {
         if (!user) return res.status(401).json({ error: 'User not found' });
@@ -138,7 +138,7 @@ app.get('/api/my-orders', (req, res) => {
 });
 
 // Get Orders (Admin)
-app.get('/api/orders', (req, res) => {
+app.get(['/api/orders', '/orders'], (req, res) => {
     db.all(`SELECT * FROM orders ORDER BY created_at DESC`, [], (err, rows) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(rows);
@@ -146,7 +146,7 @@ app.get('/api/orders', (req, res) => {
 });
 
 // Update Order (Admin)
-app.put('/api/orders/:id', (req, res) => {
+app.put(['/api/orders/:id', '/orders/:id'], (req, res) => {
     const { status, price, admin_notes } = req.body;
     let query = `UPDATE orders SET `;
     let params = [];
@@ -166,11 +166,16 @@ app.put('/api/orders/:id', (req, res) => {
 });
 
 // Delete Order (Admin)
-app.delete('/api/orders/:id', (req, res) => {
+app.delete(['/api/orders/:id', '/orders/:id'], (req, res) => {
     db.run(`DELETE FROM orders WHERE id = ?`, [req.params.id], function(err) {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ success: true });
     });
+});
+
+// TANGKAP SEMUA ERROR ROUTE (Membantu Debug)
+app.use((req, res) => {
+    res.status(404).json({ error: "Route not found in express", url: req.url, originalUrl: req.originalUrl });
 });
 
 const PORT = process.env.PORT || 3001;
