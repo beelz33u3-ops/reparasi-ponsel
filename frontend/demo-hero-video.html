@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Latar Belakang Video | RahmatFix</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS dari website Anda -->
+    <link rel="stylesheet" href="style.css?v=3">
+    
+    <style>
+        /* CSS Khusus untuk Efek Video Background */
+        .video-hero-section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh; /* Memenuhi layar */
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            margin-top: -80px; /* Kompensasi tinggi navbar agar video menutupi layar */
+            padding-top: 80px;
+        }
+
+        /* Styling Video agar responsive dan menutupi layar */
+        .video-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 0; /* Positif agar tidak tembus ke belakang body */
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        /* Overlay Gelap agar tulisan tetap terbaca jelas */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0.8) 100%);
+            z-index: 1;
+        }
+
+        /* Modifikasi Hero Container untuk demo ini */
+        .video-hero-section .hero-container {
+            position: relative;
+            z-index: 2; /* Teks harus berada paling atas */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Menghilangkan gambar ilustrasi hero bawaan karena sudah diganti video */
+        .video-hero-section .hero-image {
+            display: none; 
+        }
+
+        .video-hero-section .hero-content {
+            max-width: 700px;
+            margin: 0 auto; /* Posisi di tengah */
+            text-align: center; /* Teks di tengah */
+        }
+
+        .video-hero-section .hero-features {
+            justify-content: center;
+        }
+
+        .video-hero-section .hero-buttons {
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Sama seperti index.html -->
+    <nav class="navbar" style="background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px);">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-mobile-screen-button"></i> Rahmat<span>Fix</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#services">Layanan</a></li>
+                <li><a href="#why-us">Keunggulan</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section dengan Video Background -->
+    <section class="video-hero-section">
+        
+        <!-- Video Background -->
+        <video class="video-bg" autoplay loop muted playsinline>
+            <source src="images/hero-video.mp4" type="video/mp4">
+            Browser Anda tidak mendukung tag video.
+        </video>
+        
+        <!-- Gelap Transparan -->
+        <div class="video-overlay"></div>
+
+        <div class="container hero-container">
+            <div class="hero-content">
+                <div class="badge" style="margin: 0 auto 20px auto;">Spesialis Reparasi Smartphone</div>
+                <h1 style="font-size: 3.5rem;">Solusi Kilat <br><span class="highlight">Servis HP Anda.</span></h1>
+                <p style="font-size: 1.1rem; color: #e2e8f0;">Layanan perbaikan smartphone profesional, cepat, dan bergaransi. Mulai dari ganti LCD hingga masalah mesin berat, kami tangani dengan teknisi ahli.</p>
+                <div class="hero-features" style="display: flex; gap: 25px; margin-bottom: 30px;">
+                    <div class="hero-feature" style="text-align: center;">
+                        <i class="fa-solid fa-mobile-screen" style="color: var(--accent-secondary); font-size: 1.8rem; margin-bottom: 8px;"></i>
+                        <span style="display: block; font-size: 0.95rem; font-weight: 600; color: var(--text-primary);">Ganti Layar</span>
+                    </div>
+                    <div class="hero-feature" style="text-align: center;">
+                        <i class="fa-solid fa-battery-full" style="color: var(--accent-secondary); font-size: 1.8rem; margin-bottom: 8px;"></i>
+                        <span style="display: block; font-size: 0.95rem; font-weight: 600; color: var(--text-primary);">Servis Baterai</span>
+                    </div>
+                    <div class="hero-feature" style="text-align: center;">
+                        <i class="fa-solid fa-microchip" style="color: var(--accent-secondary); font-size: 1.8rem; margin-bottom: 8px;"></i>
+                        <span style="display: block; font-size: 0.95rem; font-weight: 600; color: var(--text-primary);">Mati Total</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/6281371864129" class="btn-primary" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> Konsultasi Gratis (WA)
+                    </a>
+                    <a href="#services" class="btn-secondary">Lihat Layanan</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

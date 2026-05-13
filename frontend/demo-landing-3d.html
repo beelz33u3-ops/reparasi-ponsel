@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Landing Page 3D RahmatFix</title>
+    <!-- Menggunakan font Poppins agar terlihat premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #050505; /* Hitam pekat premium */
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Container utama dengan layout terbelah (Split Screen) */
+        .hero-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100vh;
+            padding: 0 8%;
+            position: relative;
+        }
+
+        /* Bagian Kiri: Teks dan Tombol */
+        .hero-content {
+            flex: 1;
+            z-index: 2; /* Memastikan teks ada di atas efek cahaya */
+            max-width: 500px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .btn-cta {
+            display: inline-block;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #fff;
+            background: linear-gradient(45deg, #007aff, #0056b3);
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(0, 122, 255, 0.5);
+        }
+
+        /* Bagian Kanan: Objek 3D Spline */
+        .hero-3d {
+            flex: 1;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        /* Mengatur agar Spline Viewer pas di areanya */
+        spline-viewer {
+            width: 120%; /* Sedikit diperbesar agar memukau */
+            height: 100%;
+        }
+
+        /* Efek cahaya neon biru samar di belakang objek 3D */
+        .glow-effect {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: #007aff;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.15;
+            z-index: -1;
+            right: 10%;
+        }
+
+        /* Responsif untuk layar HP */
+        @media (max-width: 768px) {
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 100px;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-3d {
+                width: 100%;
+                height: 50vh;
+                margin-top: 20px;
+            }
+            spline-viewer {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero-section">
+        <!-- Teks Kiri -->
+        <div class="hero-content">
+            <h1>RahmatFix:<br>Solusi Pintar Gadget Anda</h1>
+            <p>Perbaiki smartphone Anda dengan presisi tinggi dan layanan terpercaya. Kami menghidupkan kembali perangkat Anda seperti baru keluar dari pabrik.</p>
+            <a href="#" class="btn-cta">Pesan Layanan</a>
+        </div>
+
+        <!-- 3D Kanan -->
+        <div class="hero-3d">
+            <div class="glow-effect"></div>
+            <!-- Script Spline -->
+            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.51/build/spline-viewer.js"></script>
+            <!-- Menggunakan contoh 3D Keyboard (Bayangkan ini diganti 3D HP nanti) -->
+            <spline-viewer url="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"></spline-viewer>
+        </div>
+    </section>
+
+</body>
+</html>

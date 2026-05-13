@@ -6,7 +6,7 @@
     --text-primary: #f0f0f0;
     --text-secondary: #a0a0b0;
     --accent-primary: #00d2ff;
-    --accent-secondary: #3a7bd5;
+    --accent-secondary: #ff6b00;
     --neon-glow: rgba(0, 210, 255, 0.4);
     --whatsapp-color: #25D366;
     
@@ -47,6 +47,7 @@ h1, h2, h3, h4 {
 .highlight {
     background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
 }
@@ -152,22 +153,28 @@ h1, h2, h3, h4 {
 
 /* Hero Section */
 .hero {
+    position: relative;
     padding-top: 150px;
     padding-bottom: 80px;
     min-height: 100vh;
     display: flex;
     align-items: center;
+    overflow: hidden;
 }
 
 .hero-container {
+    position: relative;
+    z-index: 2; /* Di atas overlay video */
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    gap: 50px;
+    width: 100%;
 }
 
 .hero-content {
-    flex: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .badge {
@@ -178,7 +185,7 @@ h1, h2, h3, h4 {
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: 600;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
     border: 1px solid rgba(0, 210, 255, 0.2);
 }
 
@@ -190,13 +197,38 @@ h1, h2, h3, h4 {
 .hero p {
     font-size: 1.1rem;
     color: var(--text-secondary);
-    margin-bottom: 30px;
-    max-width: 500px;
+    margin: 0 auto 30px auto;
+    max-width: 600px;
 }
 
 .hero-buttons {
     display: flex;
+    justify-content: center;
     gap: 15px;
+}
+
+/* Video Background Styles */
+.video-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0.8) 100%);
+    z-index: 1;
 }
 
 .hero-image {
@@ -270,7 +302,9 @@ h1, h2, h3, h4 {
     border: 1px solid rgba(255, 255, 255, 0.05);
     transition: var(--transition);
     position: relative;
-    overflow: hidden;
+    /* Removed overflow: hidden to allow 3D pop-out */
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 .service-card::before {
@@ -304,10 +338,11 @@ h1, h2, h3, h4 {
     margin-bottom: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     transition: var(--transition);
+    transform: translateZ(40px); /* 3D pop-out effect */
 }
 
 .service-card:hover .service-img {
-    transform: scale(1.05);
+    transform: translateZ(50px) scale(1.05);
 }
 
 .service-icon {
@@ -326,11 +361,13 @@ h1, h2, h3, h4 {
 .service-card h3 {
     font-size: 1.3rem;
     margin-bottom: 15px;
+    transform: translateZ(30px);
 }
 
 .service-card p {
     color: var(--text-secondary);
     font-size: 0.95rem;
+    transform: translateZ(20px);
 }
 
 /* Why Us Section */
@@ -495,6 +532,216 @@ footer {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* 3D Exploded View Styles */
+.scroll-container {
+    height: 300vh; 
+    background-color: var(--bg-dark);
+}
+
+.sticky-view {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+    overflow: hidden;
+}
+
+.title-text {
+    position: absolute;
+    top: 15%;
+    text-align: center;
+    width: 100%;
+    z-index: 10;
+}
+.title-text h2 { margin: 0; font-size: 2.5rem; }
+.title-text p { color: var(--text-secondary); margin-top: 10px; }
+
+.phone-container {
+    position: relative;
+    width: 250px;
+    height: 500px;
+    transform-style: preserve-3d;
+    transform: rotateX(60deg) rotateZ(-45deg);
+}
+
+/* Update .layer to be a 3D container */
+.layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-style: preserve-3d;
+}
+
+/* Face setup */
+.face {
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Base dimensions for layers */
+.layer-screen, .layer-casing {
+    width: 250px;
+    height: 500px;
+}
+.layer-battery {
+    width: 230px;
+    height: 290px;
+    top: 200px;
+    left: 10px;
+}
+.layer-motherboard {
+    width: 230px;
+    height: 180px;
+    top: 10px;
+    left: 10px;
+}
+
+/* Initial Z-positions (Stacked Solidly) */
+.layer-casing { transform: translateZ(0px); }
+.layer-motherboard { transform: translateZ(12px); }
+.layer-battery { transform: translateZ(12px); }
+.layer-screen { transform: translateZ(18px); }
+
+/* Box structure - apply to all layers */
+.layer .front, .layer .back {
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+}
+.layer-battery .front, .layer-battery .back { border-radius: 10px; }
+.layer-motherboard .front, .layer-motherboard .back { border-radius: 10px; }
+
+.layer .left, .layer .right {
+    height: calc(100% - 40px);
+    top: 20px;
+}
+.layer .top, .layer .bottom {
+    width: calc(100% - 40px);
+    left: 20px;
+}
+
+/* --- Pure CSS Layer Styles --- */
+
+/* Screen (Depth: 4px) */
+.layer-screen .front { 
+    background-image: url('images/iphone_ui_screen.png?v=3');
+    background-size: 215% auto; /* Kurangi zoom agar tidak terpotong (pas di layar) */
+    background-position: center center;
+    border: 2px solid #111;
+    transform: translateZ(2px); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.layer-screen .back { transform: translateZ(-2px); background-color: #111; border: 1px solid #333; }
+.layer-screen .left { width: 4px; left: -2px; transform: rotateY(-90deg); background: #555; }
+.layer-screen .right { width: 4px; right: -2px; transform: rotateY(90deg); background: #555; }
+.layer-screen .top { height: 4px; top: -2px; transform: rotateX(90deg); background: #555; }
+.layer-screen .bottom { height: 4px; bottom: -2px; transform: rotateX(-90deg); background: #555; }
+
+/* Battery (Depth: 8px) */
+.layer-battery .front { 
+    background: #2a2a2a; 
+    border: 2px solid #111;
+    transform: translateZ(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* Battery Sticker */
+.layer-battery .front::after {
+    content: 'Li-ion 5000mAh \A Warning: Do not puncture';
+    white-space: pre-wrap;
+    text-align: center;
+    font-size: 10px;
+    color: #fff;
+    width: 80%;
+    height: 80%;
+    background: #198754;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000;
+}
+.layer-battery .back { transform: translateZ(-4px); background-color: #222; }
+.layer-battery .left { width: 8px; left: -4px; height: calc(100% - 10px); top: 5px; background: #111; transform: rotateY(-90deg); }
+.layer-battery .right { width: 8px; right: -4px; height: calc(100% - 10px); top: 5px; background: #111; transform: rotateY(90deg); }
+.layer-battery .top { height: 8px; top: -4px; width: calc(100% - 10px); left: 5px; background: #111; transform: rotateX(90deg); }
+.layer-battery .bottom { height: 8px; bottom: -4px; width: calc(100% - 10px); left: 5px; background: #111; transform: rotateX(-90deg); }
+
+/* Motherboard (Depth: 8px) */
+.layer-motherboard .front { 
+    background: repeating-linear-gradient(45deg, #0f3d1b, #0f3d1b 10px, #144f23 10px, #144f23 20px);
+    transform: translateZ(4px); 
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 10px;
+    gap: 10px;
+}
+/* Fake Chips */
+.layer-motherboard .front::before {
+    content: ''; width: 40px; height: 40px; background: #222; border: 2px solid #555; border-radius: 3px;
+}
+.layer-motherboard .front::after {
+    content: ''; width: 60px; height: 30px; background: silver; border-radius: 2px;
+}
+.layer-motherboard .back { transform: translateZ(-4px); background: #0b2612; }
+.layer-motherboard .left { width: 8px; left: -4px; height: calc(100% - 10px); top: 5px; background: #0b2612; transform: rotateY(-90deg); }
+.layer-motherboard .right { width: 8px; right: -4px; height: calc(100% - 10px); top: 5px; background: #0b2612; transform: rotateY(90deg); }
+.layer-motherboard .top { height: 8px; top: -4px; width: calc(100% - 10px); left: 5px; background: #0b2612; transform: rotateX(90deg); }
+.layer-motherboard .bottom { height: 8px; bottom: -4px; width: calc(100% - 10px); left: 5px; background: #0b2612; transform: rotateX(-90deg); }
+
+/* Casing (Depth: 16px) */
+.layer-casing .front { 
+    background: linear-gradient(to bottom right, #111, #333); 
+    transform: translateZ(8px); 
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+}
+.layer-casing .back { 
+    background: linear-gradient(to top left, #050505, #1a1a1a);
+    transform: translateZ(-8px); 
+    box-shadow: 0 30px 60px rgba(0,0,0,0.9); 
+}
+/* Camera Bump on the back */
+.layer-casing .back::before {
+    content: '';
+    position: absolute;
+    top: 20px; left: 20px;
+    width: 60px; height: 80px;
+    background: #000;
+    border-radius: 15px;
+    border: 2px solid #333;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+.layer-casing .left { width: 16px; left: -8px; background: #222; transform: rotateY(-90deg); border: 1px solid #444; }
+.layer-casing .right { width: 16px; right: -8px; background: #222; transform: rotateY(90deg); border: 1px solid #444; }
+.layer-casing .top { height: 16px; top: -8px; background: #222; transform: rotateX(90deg); border: 1px solid #444; }
+.layer-casing .bottom { height: 16px; bottom: -8px; background: #222; transform: rotateX(-90deg); border: 1px solid #444; }
+
+.desc-text {
+    position: absolute;
+    opacity: 0;
+    font-size: 1.2rem;
+    background: rgba(0,0,0,0.8);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid #555;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.desc-screen { transform: translateZ(200px) translateY(-50px); }
+.desc-battery { transform: translateX(-200px) translateZ(10px); }
+.desc-machine { transform: translateX(200px) translateZ(0px); }
 
 /* Responsive */
 @media (max-width: 900px) {

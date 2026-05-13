@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Mentahan 3D Spline</title>
+    <style>
+        /* Menghilangkan margin bawaan browser dan set background gelap agar kontras */
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background-color: #0a0a0f; 
+            color: white;
+            font-family: sans-serif;
+            overflow: hidden; /* Mencegah layar bisa di-scroll agar fokus ke 3D */
+        }
+        
+        /* Memaksa elemen 3D untuk memenuhi 100% tinggi dan lebar layar */
+        spline-viewer { 
+            width: 100vw; 
+            height: 100vh; 
+        }
+
+        /* Sekadar teks panduan kecil di pojok kiri atas */
+        .info-teks {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 8px;
+            pointer-events: none; /* Supaya tidak mengganggu saat di-klik */
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="info-teks">
+        <h2>Demo Spline 3D</h2>
+        <p>Coba klik, tahan, dan geser mouse Anda di sekitar keyboard 3D ini.</p>
+    </div>
+
+    <!-- Skrip ajaib untuk memanggil mesin pembaca 3D dari Spline -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.51/build/spline-viewer.js"></script>
+    
+    <!-- Elemen penampil 3D. URL ini mengarah ke file 3D contoh publik (Keyboard Animasi) -->
+    <!-- Saat kita buat 3D HP nanti, kita cukup mengganti isi URL ini dengan URL buatan kita sendiri -->
+    <spline-viewer url="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"></spline-viewer>
+
+</body>
+</html>

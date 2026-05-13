@@ -1,5 +1,72 @@
 // Intersection Observer for scroll animations
 document.addEventListener('DOMContentLoaded', () => {
+    // --- 3D Animations Setup ---
+    if (typeof VanillaTilt !== 'undefined') {
+        VanillaTilt.init(document.querySelectorAll(".service-card"), {
+            max: 15,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+            scale: 1.02
+        });
+    }
+
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Image Parallax on Scroll
+        gsap.to(".hero-image img", {
+            yPercent: 15,
+            rotationX: 10,
+            rotationY: -10,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".hero",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+        
+        // Glow effect breathing animation
+        gsap.to(".glow-effect", {
+            scale: 1.3,
+            opacity: 0.5,
+            duration: 2.5,
+            yoyo: true,
+            repeat: -1,
+            ease: "sine.inOut"
+        });
+
+        // 3D Exploded View Animation
+        if(document.querySelector('.scroll-container')) {
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".scroll-container",
+                    start: "top top",      
+                    end: "bottom bottom",  
+                    scrub: 1               
+                }
+            });
+
+            // 1. Layar terangkat ke Atas
+            tl.to(".layer-screen", { z: 200, duration: 2 }, 0);
+            tl.to(".desc-screen", { opacity: 1, duration: 1 }, 1);
+
+            // 2. Baterai geser ke Kiri
+            tl.to(".layer-battery", { x: -200, duration: 2 }, 1);
+            tl.to(".desc-battery", { opacity: 1, duration: 1 }, 2);
+
+            // 3. Mesin geser ke Kanan
+            tl.to(".layer-motherboard", { x: 200, duration: 2 }, 2);
+            tl.to(".desc-machine", { opacity: 1, duration: 1 }, 3);
+
+            // 4. Wadah utama berputar pelan
+            tl.to(".phone-container", { rotateZ: 0, rotateX: 20, duration: 4 }, 0);
+        }
+    }
+    // ---------------------------
+
     const observerOptions = {
         root: null,
         rootMargin: '0px',
