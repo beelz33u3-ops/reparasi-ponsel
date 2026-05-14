@@ -59,38 +59,26 @@
     <!-- Hero Section -->
 
 
-    <!-- Why Us Section -->
-    <section id="why-us" class="why-us">
-        <div class="container">
-            <div class="section-title fade-in">
-                <h2>Mengapa Memilih <span class="highlight">Kami?</span></h2>
-            </div>
-            <div class="features-grid">
-                <div class="feature-item fade-in">
-                    <div class="feature-icon"><i class="fa-solid fa-user-tie"></i></div>
-                    <h4>Teknisi Berpengalaman</h4>
-                    <p>Ditangani langsung oleh teknisi ahli yang sudah berpengalaman bertahun-tahun.</p>
-                </div>
-                <div class="feature-item fade-in">
-                    <div class="feature-icon"><i class="fa-solid fa-medal"></i></div>
-                    <h4>Sparepart Berkualitas</h4>
-                    <p>Menggunakan komponen perbaikan yang terjamin kualitas dan keawetannya.</p>
-                </div>
-                <div class="feature-item fade-in">
-                    <div class="feature-icon"><i class="fa-solid fa-stopwatch"></i></div>
-                    <h4>Pengerjaan Cepat</h4>
-                    <p>Waktu perbaikan efisien. Beberapa kerusakan ringan bisa ditunggu!</p>
-                </div>
-                <div class="feature-item fade-in">
-                    <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                    <h4>Bergaransi</h4>
-                    <p>Tenang saja, setiap layanan servis kami lengkapi dengan garansi.</p>
-                </div>
-            </div>
+    <!-- Profile Form Section -->
+    <section id="profil" class="cta-section fade-in" style="padding: 120px 0 50px;">
+        <div class="container cta-container">
+            <h2>Profil Saya</h2>
+            <p>Kelola informasi dasar Anda agar mempermudah proses pemesanan layanan.</p>
+            <form id="profil-form" style="max-width: 500px; margin: 0 auto; text-align: left; background: #151520; padding: 30px; border-radius: 10px; border: 1px solid #333;">
+                <label style="color:#aaa; font-size:14px; margin-bottom:5px; display:block;">Nama Lengkap</label>
+                <input type="text" id="prof_name" placeholder="Nama Lengkap" style="width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0f; color: white; border: 1px solid #333; border-radius: 5px;" required>
+                
+                <label style="color:#aaa; font-size:14px; margin-bottom:5px; display:block;">Nomor WhatsApp / HP</label>
+                <input type="text" id="prof_phone" placeholder="Contoh: 081234567890" style="width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0f; color: white; border: 1px solid #333; border-radius: 5px;" required>
+                
+                <label style="color:#aaa; font-size:14px; margin-bottom:5px; display:block;">Alamat Lengkap</label>
+                <textarea id="prof_address" placeholder="Masukkan alamat lengkap Anda..." style="width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0f; color: white; border: 1px solid #333; border-radius: 5px; height: 100px; resize: vertical;" required></textarea>
+                
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;"><i class="fa-solid fa-save"></i> Simpan Profil</button>
+            </form>
+            <p id="profil-msg" style="margin-top: 15px; color: #25D366; display: none; font-weight: bold;">✅ Profil berhasil diperbarui!</p>
         </div>
     </section>
-
-
 
     <!-- Footer -->
     <footer>
@@ -115,19 +103,7 @@
                 </div>
             </div>
         </div>
-    <!-- My Orders Modal -->
-    <div id="my-orders-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:1000;">
-        <div style="background:#151520; padding:30px; border-radius:10px; width:90%; max-width:800px; max-height:80vh; overflow-y:auto; border:1px solid #333;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
-                <h2 style="margin:0; color:#00d2ff;"><i class="fa-solid fa-list-check"></i> Status Pesanan Saya</h2>
-                <button onclick="document.getElementById('my-orders-modal').style.display='none'" style="background:transparent; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
-            </div>
-            
-            <div id="my-orders-list" style="display:flex; flex-direction:column; gap:15px;">
-                <p style="text-align:center; color:#aaa;">Memuat pesanan...</p>
-            </div>
-        </div>
-    </div>
+    </footer>
 
     <!-- 3D Animation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -136,22 +112,69 @@
     
     <script src="script.js"></script>
     <script>
-        // Cek login status
+        const userName = localStorage.getItem('username') || localStorage.getItem('userName');
+        const userRole = localStorage.getItem('role') || localStorage.getItem('userRole');
         const navAuthArea = document.getElementById('nav-auth-area');
-        const userRole = localStorage.getItem('userRole');
-        const userName = localStorage.getItem('userName');
-        
+        const apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') 
+            ? 'http://localhost:3001' 
+            : 'https://reparasi-ponsel-production.up.railway.app';
+
         if(userRole) {
             navAuthArea.innerHTML = `
                 <span style="color:white; font-size:14px; margin-right:10px;">Halo, <b>${userName}</b></span>
                 <button onclick="window.location.href='profil.html'" style="background:transparent; color:#00d2ff; border:1px solid #00d2ff; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; margin-right:5px;"><i class="fa-solid fa-user"></i> Profil</button>
                 <button onclick="window.location.href='booking.html'" style="background:#0a0a0f; color:#00d2ff; border:1px solid #00d2ff; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; margin-right:5px;"><i class="fa-solid fa-magnifying-glass"></i> Lacak Pesanan</button>
-                <button onclick="localStorage.clear(); window.location.reload();" style="background:transparent; color:#dc3545; border:1px solid #dc3545; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Logout</button>
+                <button onclick="localStorage.clear(); window.location.href='index.html';" style="background:transparent; color:#dc3545; border:1px solid #dc3545; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Logout</button>
             `;
             if(userRole === 'admin') {
                 navAuthArea.innerHTML = `<a href="admin.html" style="color:#25D366; text-decoration:none; margin-right:10px; font-weight:bold;">Dasbor Admin</a>` + navAuthArea.innerHTML;
             }
+            
+            // Ambil data profil
+            fetch(`${apiBase}/api/profile?username=` + userName)
+                .then(res => res.json())
+                .then(data => {
+                    if(!data.error) {
+                        document.getElementById('prof_name').value = data.full_name || '';
+                        document.getElementById('prof_phone').value = data.phone || '';
+                        document.getElementById('prof_address').value = data.address || '';
+                    }
+                })
+                .catch(err => console.error(err));
+        } else {
+            // Redirect jika belum login
+            window.location.href = 'login.html';
         }
+
+        document.getElementById('profil-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById('prof_name').value;
+            const phone = document.getElementById('prof_phone').value;
+            const address = document.getElementById('prof_address').value;
+
+            try {
+                const res = await fetch(`${apiBase}/api/profile`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: userName,
+                        full_name: fullName,
+                        phone: phone,
+                        address: address
+                    })
+                });
+                const data = await res.json();
+                if(data.success) {
+                    const msg = document.getElementById('profil-msg');
+                    msg.style.display = 'block';
+                    setTimeout(() => msg.style.display = 'none', 3000);
+                } else {
+                    alert('Gagal menyimpan profil: ' + data.error);
+                }
+            } catch(e) {
+                alert('Terjadi kesalahan koneksi server.');
+            }
+        });
     </script>
 </body>
 </html>

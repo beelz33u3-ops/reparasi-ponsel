@@ -192,6 +192,40 @@ app.delete(['/api/tasks/:id', '/tasks/:id'], (req, res) => {
     });
 });
 
+// Get User Profile
+app.get(['/api/profile', '/profile'], (req, res) => {
+    const { username } = req.query;
+    if (!username) return res.status(400).json({ error: 'Username required' });
+    
+    db.get(`SELECT id FROM users WHERE username = ? OR email = ?`, [username, username], (err, user) => {
+        if (err || !user) return res.status(404).json({ error: 'User not found' });
+        
+        db.get(`SELECT * FROM user_profiles WHERE user_id = ?`, [user.id], (err, profile) => {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json(profile || { full_name: '', phone: '', address: '' });
+        });
+    });
+});
+
+// Update User Profile
+app.put(['/api/profile', '/profile'], (req, res) => {
+    const { username, full_name, phone, address } = req.body;
+    if (!username) return res.status(400).json({ error: 'Username required' });
+
+    db.get(`SELECT id FROM users WHERE username = ? OR email = ?`, [username, username], (err, user) => {
+        if (err || !user) return res.status(404).json({ error: 'User not found' });
+        
+        db.run(`INSERT INTO user_profiles (user_id, full_name, phone, address) 
+                VALUES (?, ?, ?, ?)
+                ON CONFLICT(user_id) DO UPDATE SET 
+                full_name=excluded.full_name, phone=excluded.phone, address=excluded.address`, 
+        [user.id, full_name, phone, address], function(err) {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ success: true });
+        });
+    });
+});
+
 // TANGKAP SEMUA ERROR ROUTE (Membantu Debug)
 app.use((req, res) => {
     res.status(404).json({ error: "Route not found in express", url: req.url, originalUrl: req.originalUrl });

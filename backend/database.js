@@ -55,6 +55,15 @@ const db = new sqlite3.Database(dbPath, (err) => {
                 completed BOOLEAN DEFAULT 0
             )`);
 
+            // Create user_profiles table
+            db.run(`CREATE TABLE IF NOT EXISTS user_profiles (
+                user_id INTEGER PRIMARY KEY,
+                full_name TEXT,
+                phone TEXT,
+                address TEXT,
+                FOREIGN KEY (user_id) REFERENCES users (id)
+            )`);
+
             // Insert default admin if not exists
             const adminPasswordHash = '$2a$10$fK5mTmvZ0QdguWiqzVadeu4u2ESH7qKY2B2XevcTn5wFa0zCjRIV6'; // admin123
             db.run(`INSERT OR IGNORE INTO users (username, password, email, role) VALUES ('admin', ?, 'admin@rahmatfix.com', 'admin')`, [adminPasswordHash]);

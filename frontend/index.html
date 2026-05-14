@@ -120,6 +120,7 @@
         if(userRole) {
             navAuthArea.innerHTML = `
                 <span style="color:white; font-size:14px; margin-right:10px;">Halo, <b>${userName}</b></span>
+                <button onclick="window.location.href='profil.html'" style="background:transparent; color:#00d2ff; border:1px solid #00d2ff; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; margin-right:5px;"><i class="fa-solid fa-user"></i> Profil</button>
                 <button onclick="window.location.href='booking.html'" style="background:#0a0a0f; color:#00d2ff; border:1px solid #00d2ff; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; margin-right:5px;"><i class="fa-solid fa-magnifying-glass"></i> Lacak Pesanan</button>
                 <button onclick="localStorage.clear(); window.location.reload();" style="background:transparent; color:#dc3545; border:1px solid #dc3545; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Logout</button>
             `;

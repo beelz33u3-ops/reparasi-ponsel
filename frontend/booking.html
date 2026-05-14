@@ -142,6 +142,21 @@
             if(userRole === 'admin') {
                 navAuthArea.innerHTML = `<a href="admin.html" style="color:#25D366; text-decoration:none; margin-right:10px; font-weight:bold;">Dasbor Admin</a>` + navAuthArea.innerHTML;
             }
+
+            // Auto-fill form booking dengan data profil (jika ada)
+            const apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') 
+                ? 'http://localhost:3001' 
+                : 'https://reparasi-ponsel-production.up.railway.app';
+            
+            fetch(`${apiBase}/api/profile?username=` + userName)
+                .then(res => res.json())
+                .then(data => {
+                    if(!data.error) {
+                        if(data.full_name) document.getElementById('customer_name').value = data.full_name;
+                        if(data.phone) document.getElementById('customer_phone').value = data.phone;
+                    }
+                })
+                .catch(err => console.error("Error fetching profile for autofill:", err));
         }
 
         async function openMyOrders() {
