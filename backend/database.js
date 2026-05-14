@@ -64,9 +64,10 @@ const db = new sqlite3.Database(dbPath, (err) => {
                 FOREIGN KEY (user_id) REFERENCES users (id)
             )`);
 
-            // Insert default admin if not exists
-            const adminPasswordHash = '$2a$10$fK5mTmvZ0QdguWiqzVadeu4u2ESH7qKY2B2XevcTn5wFa0zCjRIV6'; // admin123
-            db.run(`INSERT OR IGNORE INTO users (username, password, email, role) VALUES ('admin', ?, 'admin@rahmatfix.com', 'admin')`, [adminPasswordHash]);
+            // Insert or Update default admin
+            const correctAdminHash = '$2a$10$I.dZeavfytggtqKqVjA8POk2O524ghQBuAnnQtwwMivZHS8u7Jzie'; // admin123
+            db.run(`INSERT OR IGNORE INTO users (username, password, email, role) VALUES ('admin', ?, 'admin@rahmatfix.com', 'admin')`, [correctAdminHash]);
+            db.run(`UPDATE users SET password = ? WHERE username = 'admin'`, [correctAdminHash]);
         });
     }
 });
