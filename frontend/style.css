@@ -151,6 +151,64 @@ h1, h2, h3, h4 {
     color: var(--accent-primary);
 }
 
+/* Dropdown Menu Styles */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px 0;
+    min-width: 220px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 1000;
+    list-style: none;
+    flex-direction: column;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.dropdown-menu li {
+    width: 100%;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.dropdown-menu a:hover {
+    background: rgba(0, 210, 255, 0.1);
+    color: var(--accent-primary);
+    padding-left: 25px;
+}
+
+/* No Scroll Utility for index.html */
+html:has(body.no-scroll),
+body.no-scroll {
+    overflow: hidden !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    width: 100vw !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
 /* Hero Section */
 .hero {
     position: relative;

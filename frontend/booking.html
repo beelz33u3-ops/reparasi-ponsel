@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reparasi Ponsel Profesional | Rahmat Saufi</title>
+    <meta name="description" content="Layanan perbaikan ponsel profesional, cepat, dan bergaransi. Menerima ganti LCD, baterai, perbaikan mesin, mati total, bootloop, dll.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-mobile-screen-button"></i> Rahmat<span>Fix</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li class="dropdown">
+                    <a href="layanan.html">Layanan <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="layanan.html#services">Ganti Layar</a></li>
+                        <li><a href="layanan.html#services">Ganti Baterai</a></li>
+                        <li><a href="layanan.html#services">Perbaikan Tombol</a></li>
+                        <li><a href="layanan.html#services">Perbaikan Mesin (IC)</a></li>
+                        <li><a href="layanan.html#services">Mati Total</a></li>
+                        <li><a href="layanan.html#services">Mentok Logo</a></li>
+                        <li><a href="layanan.html#services">Kerusakan Lainnya</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="keunggulan.html">Keunggulan <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="keunggulan.html#why-us">Teknisi Berpengalaman</a></li>
+                        <li><a href="keunggulan.html#why-us">Sparepart Berkualitas</a></li>
+                        <li><a href="keunggulan.html#why-us">Pengerjaan Cepat</a></li>
+                        <li><a href="keunggulan.html#why-us">Bergaransi</a></li>
+                    </ul>
+                </li>
+                <li><a href="booking.html">Booking</a></li>
+            </ul>
+            <div style="display:flex; gap:10px; align-items:center;" id="nav-auth-area">
+                <a href="login.html" id="nav-login-btn" style="text-decoration:none; color:white; font-weight:600; font-size:14px; border: 1px solid #00d2ff; padding: 10px 15px; border-radius: 5px;">Login / Daftar</a>
+                <a href="https://wa.me/6281371864129" class="btn-primary nav-btn" target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i> Hubungi Kami
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+
+
+    <!-- Booking Form Section -->
+    <section id="booking" class="cta-section fade-in">
+        <div class="container cta-container">
+            <h2>Pesan Layanan Reparasi Sekarang</h2>
+            <p>Isi formulir di bawah ini untuk memesan jadwal perbaikan ponsel Anda secara online.</p>
+            <form id="booking-form" style="max-width: 500px; margin: 0 auto; text-align: left; background: #151520; padding: 30px; border-radius: 10px; border: 1px solid #333;">
+                <input type="text" id="customer_name" placeholder="Nama Lengkap" style="width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0f; color: white; border: 1px solid #333; border-radius: 5px;" required>
+                <input type="text" id="customer_phone" placeholder="Nomor WhatsApp / HP" style="width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0f; color: white; border: 1px solid #333; border-radius: 5px;" required>
+                <select id="service_type" style="width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0f; color: white; border: 1px solid #333; border-radius: 5px;" required>
+                    <option value="" disabled selected>Pilih Layanan</option>
+                    <option value="Ganti LCD">Ganti LCD</option>
+                    <option value="Ganti Baterai">Ganti Baterai</option>
+                    <option value="Perbaikan Tombol">Perbaikan Tombol</option>
+                    <option value="Perbaikan Mesin">Perbaikan Mesin (IC)</option>
+                    <option value="Mati Total">Mati Total (Matot)</option>
+                    <option value="Mentok Logo">Mentok Logo (Bootloop)</option>
+                    <option value="Lainnya">Kerusakan Lainnya</option>
+                </select>
+                <textarea id="issue_desc" placeholder="Jelaskan detail kerusakan ponsel Anda..." style="width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0f; color: white; border: 1px solid #333; border-radius: 5px; height: 100px; resize: vertical;" required></textarea>
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Kirim Pesanan</button>
+            </form>
+            <p id="booking-msg" style="margin-top: 15px; color: #25D366; display: none; font-weight: bold;">✅ Pesanan berhasil dikirim! Tim RahmatFix akan memprosesnya.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-about">
+                <h3>Rahmat<span>Fix</span></h3>
+                <p>Layanan reparasi ponsel profesional terpercaya untuk semua jenis kerusakan smartphone Anda.</p>
+                <a href="https://wa.me/6281371864129" class="btn-primary" target="_blank" style="margin-top: 20px; font-size: 14px; padding: 12px 20px; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 18px;"></i> Hubungi Teknisi Sekarang via WhatsApp
+                </a>
+            </div>
+            <div class="footer-contact">
+                <h4>Kontak Kami</h4>
+                <p><i class="fa-solid fa-phone"></i> 0813-7186-4129</p>
+                <p><i class="fa-brands fa-whatsapp"></i> 0813-7186-4129</p>
+            </div>
+            <div class="footer-social">
+                <h4>Media Sosial</h4>
+                <div class="social-icons">
+                    <a href="https://instagram.com/_rahmatsaufi" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i> _rahmatsaufi</a>
+                    <a href="https://facebook.com/RahmatSaufi" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i> Rahmat Saufi</a>
+                </div>
+            </div>
+        </div>
+    <!-- My Orders Modal -->
+    <div id="my-orders-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:1000;">
+        <div style="background:#151520; padding:30px; border-radius:10px; width:90%; max-width:800px; max-height:80vh; overflow-y:auto; border:1px solid #333;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                <h2 style="margin:0; color:#00d2ff;"><i class="fa-solid fa-list-check"></i> Status Pesanan Saya</h2>
+                <button onclick="document.getElementById('my-orders-modal').style.display='none'" style="background:transparent; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
+            </div>
+            
+            <div id="my-orders-list" style="display:flex; flex-direction:column; gap:15px;">
+                <p style="text-align:center; color:#aaa;">Memuat pesanan...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3D Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    
+    <script src="script.js"></script>
+    <script>
+        // Cek login status
+        const navAuthArea = document.getElementById('nav-auth-area');
+        const userRole = localStorage.getItem('userRole');
+        const userName = localStorage.getItem('userName');
+        
+        if(userRole) {
+            navAuthArea.innerHTML = `
+                <span style="color:white; font-size:14px; margin-right:10px;">Halo, <b>${userName}</b></span>
+                <button onclick="openMyOrders()" style="background:#0a0a0f; color:#00d2ff; border:1px solid #00d2ff; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold; margin-right:5px;"><i class="fa-solid fa-magnifying-glass"></i> Lacak Pesanan</button>
+                <button onclick="localStorage.clear(); window.location.reload();" style="background:transparent; color:#dc3545; border:1px solid #dc3545; padding:8px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">Logout</button>
+            `;
+            if(userRole === 'admin') {
+                navAuthArea.innerHTML = `<a href="admin.html" style="color:#25D366; text-decoration:none; margin-right:10px; font-weight:bold;">Dasbor Admin</a>` + navAuthArea.innerHTML;
+            }
+        }
+
+        async function openMyOrders() {
+            document.getElementById('my-orders-modal').style.display = 'flex';
+            const listEl = document.getElementById('my-orders-list');
+            listEl.innerHTML = '<p style="text-align:center; color:#aaa;">Memuat pesanan...</p>';
+            
+            try {
+                const apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') 
+                    ? 'http://localhost:3001' 
+                    : 'https://reparasi-ponsel-production.up.railway.app';
+                const res = await fetch(`${apiBase}/api/my-orders?username=` + userName);
+                const orders = await res.json();
+                
+                if(orders.length === 0) {
+                    listEl.innerHTML = '<p style="text-align:center; color:#aaa;">Belum ada pesanan yang Anda buat. Silakan pesan layanan di bawah!</p>';
+                    return;
+                }
+
+                listEl.innerHTML = '';
+                orders.forEach(o => {
+                    let statusColor = 'orange';
+                    if(o.status === 'Selesai') statusColor = '#25D366';
+                    if(o.status === 'Sudah Diambil') statusColor = '#aaa';
+                    if(o.status === 'Menunggu Sparepart') statusColor = '#ff007f';
+
+                    listEl.innerHTML += `
+                        <div style="background:#0a0a0f; padding:20px; border-radius:8px; border:1px solid #333; display:flex; flex-wrap:wrap; justify-content:space-between; gap:15px;">
+                            <div style="flex:1; min-width:200px;">
+                                <h4 style="margin:0 0 5px; color:white;">Layanan: ${o.service_type}</h4>
+                                <p style="margin:0 0 5px; color:#aaa; font-size:14px;">Keluhan: ${o.issue_desc}</p>
+                                <p style="margin:0; color:#00d2ff; font-size:12px;">Order ID: #${o.id} | Tanggal: ${new Date(o.created_at).toLocaleDateString('id-ID')}</p>
+                            </div>
+                            <div style="flex:1; min-width:200px; text-align:right;">
+                                <div style="display:inline-block; padding:5px 10px; border-radius:20px; background:rgba(0,0,0,0.5); border:1px solid ${statusColor}; color:${statusColor}; font-weight:bold; font-size:12px; margin-bottom:10px;">
+                                    ${o.status}
+                                </div>
+                                <h3 style="margin:0; color:white;">Total Biaya: <span style="color:#25D366;">Rp ${o.price ? o.price.toLocaleString('id-ID') : '<i>Menunggu Cek</i>'}</span></h3>
+                            </div>
+                            ${o.admin_notes ? `
+                            <div style="width:100%; background:#151520; padding:10px; border-left:3px solid #ff007f; border-radius:4px; margin-top:5px;">
+                                <b style="color:#ff007f; font-size:12px;">Catatan Teknisi:</b>
+                                <p style="margin:5px 0 0; font-size:14px; color:#ddd;">${o.admin_notes}</p>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+            } catch(e) {
+                listEl.innerHTML = '<p style="text-align:center; color:red;">Gagal memuat pesanan.</p>';
+            }
+        }
+    </script>
+</body>
+</html>

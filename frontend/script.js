@@ -14,29 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hero Image Parallax on Scroll
-        gsap.to(".hero-image img", {
-            yPercent: 15,
-            rotationX: 10,
-            rotationY: -10,
-            ease: "none",
-            scrollTrigger: {
-                trigger: ".hero",
-                start: "top top",
-                end: "bottom top",
-                scrub: true
-            }
-        });
-        
-        // Glow effect breathing animation
-        gsap.to(".glow-effect", {
-            scale: 1.3,
-            opacity: 0.5,
-            duration: 2.5,
-            yoyo: true,
-            repeat: -1,
-            ease: "sine.inOut"
-        });
 
     }
     // ---------------------------
