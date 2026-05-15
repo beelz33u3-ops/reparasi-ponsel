@@ -38,6 +38,56 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(element);
     });
 
+    // --- Mobile Navigation Menu Logic ---
+    const navContainer = document.querySelector('.nav-container');
+    if (navContainer && !document.querySelector('.mobile-menu-btn')) {
+        const mobileBtn = document.createElement('div');
+        mobileBtn.className = 'mobile-menu-btn';
+        mobileBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        
+        // Insert before auth area if it exists, otherwise append
+        const authArea = document.getElementById('nav-auth-area');
+        if (authArea) {
+            navContainer.insertBefore(mobileBtn, authArea);
+        } else {
+            navContainer.appendChild(mobileBtn);
+        }
+
+        mobileBtn.addEventListener('click', () => {
+            const navLinks = document.querySelector('.nav-links');
+            if(navLinks) {
+                navLinks.classList.toggle('active');
+                if (navLinks.classList.contains('active')) {
+                    mobileBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                } else {
+                    mobileBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                }
+            }
+        });
+        
+        // Handle dropdowns on mobile
+        const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('click', (e) => {
+                if (window.innerWidth <= 900) {
+                    // Hanya matikan link utama jika klik icon chevron
+                    if (e.target.tagName === 'I') {
+                        e.preventDefault();
+                        dropdown.classList.toggle('active');
+                    } else {
+                        // Jika tidak ada href atau href '#', cegah default
+                        const link = dropdown.querySelector('a');
+                        if(link && (link.getAttribute('href') === '#' || link.getAttribute('href') === '')) {
+                            e.preventDefault();
+                            dropdown.classList.toggle('active');
+                        }
+                    }
+                }
+            });
+        });
+    }
+    // ------------------------------------
+
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
