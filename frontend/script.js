@@ -14,7 +14,32 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
 
+        // 3D Exploded View Animation
+        if(document.querySelector('.scroll-container')) {
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".scroll-container",
+                    start: "top top",      
+                    end: "bottom bottom",  
+                    scrub: 1               
+                }
+            });
 
+            // 1. Layar terangkat ke Atas
+            tl.to(".layer-screen", { z: 200, duration: 2 }, 0);
+            tl.to(".desc-screen", { opacity: 1, duration: 1 }, 1);
+
+            // 2. Baterai geser ke Kiri
+            tl.to(".layer-battery", { x: -200, duration: 2 }, 1);
+            tl.to(".desc-battery", { opacity: 1, duration: 1 }, 2);
+
+            // 3. Mesin geser ke Kanan
+            tl.to(".layer-motherboard", { x: 200, duration: 2 }, 2);
+            tl.to(".desc-machine", { opacity: 1, duration: 1 }, 3);
+
+            // 4. Wadah utama berputar pelan
+            tl.to(".phone-container", { rotateZ: 0, rotateX: 20, duration: 4 }, 0);
+        }
     }
     // ---------------------------
 
