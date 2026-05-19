@@ -146,7 +146,7 @@
             // Auto-fill form booking dengan data profil (jika ada)
             const apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') 
                 ? 'http://localhost:3001' 
-                : 'https://reparasi-ponsel-production.up.railway.app';
+                : '';
             
             fetch(`${apiBase}/api/profile?username=` + userName)
                 .then(res => res.json())
@@ -167,7 +167,7 @@
             try {
                 const apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') 
                     ? 'http://localhost:3001' 
-                    : 'https://reparasi-ponsel-production.up.railway.app';
+                    : '';
                 const res = await fetch(`${apiBase}/api/my-orders?username=` + userName);
                 const orders = await res.json();
                 

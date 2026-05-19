@@ -230,7 +230,7 @@
         // Sesuaikan dengan URL server backend saat di-deploy
         const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') 
             ? 'http://localhost:3001/api' 
-            : 'https://reparasi-ponsel-production.up.railway.app/api';
+            : '/api';
         
         const authMsg = document.getElementById('auth-msg');
         const regMsg = document.getElementById('reg-msg');

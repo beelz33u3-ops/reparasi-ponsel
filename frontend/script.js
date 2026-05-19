@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Simpan ke database (opsional)
                 const apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') 
                     ? 'http://localhost:3001' 
-                    : 'https://reparasi-ponsel-production.up.railway.app';
+                    : '';
                 const response = await fetch(`${apiBase}/api/orders`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
