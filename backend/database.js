@@ -63,8 +63,14 @@ const db = new sqlite3.Database(dbPath, (err) => {
                 full_name TEXT,
                 phone TEXT,
                 address TEXT,
+                profile_photo TEXT,
                 FOREIGN KEY (user_id) REFERENCES users (id)
             )`);
+            
+            // Alter table just in case it already exists without profile_photo
+            db.run(`ALTER TABLE user_profiles ADD COLUMN profile_photo TEXT`, (err) => {
+                // Ignore error if column already exists
+            });
 
             // Insert or Update default admin
             const correctAdminHash = '$2a$10$I.dZeavfytggtqKqVjA8POk2O524ghQBuAnnQtwwMivZHS8u7Jzie'; // admin123

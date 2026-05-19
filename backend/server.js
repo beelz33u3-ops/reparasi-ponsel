@@ -209,17 +209,17 @@ app.get(['/api/profile', '/profile'], (req, res) => {
 
 // Update User Profile
 app.put(['/api/profile', '/profile'], (req, res) => {
-    const { username, full_name, phone, address } = req.body;
+    const { username, full_name, phone, address, profile_photo } = req.body;
     if (!username) return res.status(400).json({ error: 'Username required' });
 
     db.get(`SELECT id FROM users WHERE username = ? OR email = ?`, [username, username], (err, user) => {
         if (err || !user) return res.status(404).json({ error: 'User not found' });
         
-        db.run(`INSERT INTO user_profiles (user_id, full_name, phone, address) 
-                VALUES (?, ?, ?, ?)
+        db.run(`INSERT INTO user_profiles (user_id, full_name, phone, address, profile_photo) 
+                VALUES (?, ?, ?, ?, ?)
                 ON CONFLICT(user_id) DO UPDATE SET 
-                full_name=excluded.full_name, phone=excluded.phone, address=excluded.address`, 
-        [user.id, full_name, phone, address], function(err) {
+                full_name=excluded.full_name, phone=excluded.phone, address=excluded.address, profile_photo=excluded.profile_photo`, 
+        [user.id, full_name, phone, address, profile_photo], function(err) {
             if (err) return res.status(500).json({ error: err.message });
             res.json({ success: true });
         });
