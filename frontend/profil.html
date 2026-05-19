@@ -129,17 +129,16 @@
                 navAuthArea.innerHTML = `<a href="admin.html" style="color:#25D366; text-decoration:none; margin-right:10px; font-weight:bold;">Dasbor Admin</a>` + navAuthArea.innerHTML;
             }
             
-            // Ambil data profil
-            fetch(`${apiBase}/api/profile?username=` + userName)
-                .then(res => res.json())
-                .then(data => {
-                    if(!data.error) {
-                        document.getElementById('prof_name').value = data.full_name || '';
-                        document.getElementById('prof_phone').value = data.phone || '';
-                        document.getElementById('prof_address').value = data.address || '';
-                    }
-                })
-                .catch(err => console.error(err));
+            // Ambil data profil dari localStorage (Fallback)
+            const savedProfile = localStorage.getItem('profile_' + userName);
+            if(savedProfile) {
+                try {
+                    const data = JSON.parse(savedProfile);
+                    document.getElementById('prof_name').value = data.full_name || '';
+                    document.getElementById('prof_phone').value = data.phone || '';
+                    document.getElementById('prof_address').value = data.address || '';
+                } catch(e){}
+            }
         } else {
             // Redirect jika belum login
             window.location.href = 'login.html';
@@ -152,26 +151,18 @@
             const address = document.getElementById('prof_address').value;
 
             try {
-                const res = await fetch(`${apiBase}/api/profile`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        username: userName,
-                        full_name: fullName,
-                        phone: phone,
-                        address: address
-                    })
-                });
-                const data = await res.json();
-                if(data.success) {
-                    const msg = document.getElementById('profil-msg');
-                    msg.style.display = 'block';
-                    setTimeout(() => msg.style.display = 'none', 3000);
-                } else {
-                    alert('Gagal menyimpan profil: ' + data.error);
-                }
+                const profileData = {
+                    full_name: fullName,
+                    phone: phone,
+                    address: address
+                };
+                localStorage.setItem('profile_' + userName, JSON.stringify(profileData));
+                
+                const msg = document.getElementById('profil-msg');
+                msg.style.display = 'block';
+                setTimeout(() => msg.style.display = 'none', 3000);
             } catch(e) {
-                alert('Terjadi kesalahan koneksi server.');
+                alert('Terjadi kesalahan penyimpanan.');
             }
         });
     </script>
