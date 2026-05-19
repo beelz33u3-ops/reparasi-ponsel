@@ -148,20 +148,20 @@
                 navAuthArea.innerHTML = `<a href="admin.html" style="color:#25D366; text-decoration:none; margin-right:10px; font-weight:bold;">Dasbor Admin</a>` + navAuthArea.innerHTML;
             }
             
-            // Ambil data profil dari localStorage (Fallback)
-            const savedProfile = localStorage.getItem('profile_' + userName);
-            if(savedProfile) {
-                try {
-                    const data = JSON.parse(savedProfile);
-                    document.getElementById('prof_name').value = data.full_name || '';
-                    document.getElementById('prof_phone').value = data.phone || '';
-                    document.getElementById('prof_address').value = data.address || '';
-                    if(data.profile_photo) {
-                        document.getElementById('prof_photo_preview').src = data.profile_photo;
-                        localStorage.setItem('profile_photo_' + userName, data.profile_photo);
+            // Ambil data profil dari server
+            fetch(`${apiBase}/api/profile?username=` + userName)
+                .then(res => res.json())
+                .then(data => {
+                    if(!data.error) {
+                        document.getElementById('prof_name').value = data.full_name || '';
+                        document.getElementById('prof_phone').value = data.phone || '';
+                        document.getElementById('prof_address').value = data.address || '';
+                        if(data.profile_photo) {
+                            document.getElementById('prof_photo_preview').src = data.profile_photo;
+                        }
                     }
-                } catch(e){}
-            }
+                })
+                .catch(err => console.error(err));
         } else {
             // Redirect jika belum login
             window.location.href = 'login.html';
@@ -175,19 +175,27 @@
             const profilePhoto = document.getElementById('prof_photo_preview').src;
 
             try {
-                const profileData = {
-                    full_name: fullName,
-                    phone: phone,
-                    address: address,
-                    profile_photo: profilePhoto
-                };
-                localStorage.setItem('profile_' + userName, JSON.stringify(profileData));
-                
-                const msg = document.getElementById('profil-msg');
-                msg.style.display = 'block';
-                setTimeout(() => msg.style.display = 'none', 3000);
+                const res = await fetch(`${apiBase}/api/profile`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: userName,
+                        full_name: fullName,
+                        phone: phone,
+                        address: address,
+                        profile_photo: profilePhoto
+                    })
+                });
+                const data = await res.json();
+                if(data.success) {
+                    const msg = document.getElementById('profil-msg');
+                    msg.style.display = 'block';
+                    setTimeout(() => msg.style.display = 'none', 3000);
+                } else {
+                    alert('Gagal menyimpan profil: ' + data.error);
+                }
             } catch(e) {
-                alert('Terjadi kesalahan penyimpanan.');
+                alert('Terjadi kesalahan koneksi server.');
             }
         });
     </script>

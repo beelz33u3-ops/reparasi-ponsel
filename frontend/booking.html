@@ -148,14 +148,15 @@
                 ? 'http://localhost:3001' 
                 : 'https://reparasi-ponsel-production.up.railway.app';
             
-            const savedProfile = localStorage.getItem('profile_' + userName);
-            if(savedProfile) {
-                try {
-                    const data = JSON.parse(savedProfile);
-                    if(data.full_name) document.getElementById('customer_name').value = data.full_name;
-                    if(data.phone) document.getElementById('customer_phone').value = data.phone;
-                } catch(e){}
-            }
+            fetch(`${apiBase}/api/profile?username=` + userName)
+                .then(res => res.json())
+                .then(data => {
+                    if(!data.error) {
+                        if(data.full_name) document.getElementById('customer_name').value = data.full_name;
+                        if(data.phone) document.getElementById('customer_phone').value = data.phone;
+                    }
+                })
+                .catch(err => console.error("Error fetching profile for autofill:", err));
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
