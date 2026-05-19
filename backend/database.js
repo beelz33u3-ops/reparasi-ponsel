@@ -2,9 +2,11 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
 
+const isVercel = process.env.VERCEL === '1';
+
 // Create data directory if it doesn't exist
-const dataDir = path.join(__dirname, 'data');
-if (!fs.existsSync(dataDir)) {
+const dataDir = isVercel ? '/tmp' : path.join(__dirname, 'data');
+if (!isVercel && !fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir);
 }
 
