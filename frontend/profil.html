@@ -63,8 +63,25 @@
     <section id="profil" class="cta-section fade-in" style="padding: 120px 0 50px;">
         <div class="container cta-container">
             <h2>Profil Saya</h2>
-            <p>Kelola informasi dasar Anda agar mempermudah proses pemesanan layanan.</p>
-            <form id="profil-form" style="max-width: 500px; margin: 0 auto; text-align: left; background: #151520; padding: 30px; border-radius: 10px; border: 1px solid #333;">
+            <p id="profil-subtitle">Kelola informasi dasar Anda agar mempermudah proses pemesanan layanan.</p>
+            
+            <!-- VIEW PROFILE STATE -->
+            <div id="view-profile-section" style="max-width: 500px; margin: 0 auto; text-align: center; background: #151520; padding: 40px 30px; border-radius: 15px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none;">
+                <img id="view_photo" src="https://via.placeholder.com/150" alt="Foto Profil" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid #00d2ff; margin-bottom: 20px; box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);">
+                <h3 id="view_name" style="margin: 0 0 10px; font-size: 28px; color: white;">Nama Pengguna</h3>
+                
+                <div style="background: #0a0a0f; border-radius: 10px; padding: 15px; margin-top: 20px; text-align: left; border: 1px solid #222;">
+                    <p style="margin: 0 0 10px; color: #aaa; font-size: 14px;"><i class="fa-brands fa-whatsapp" style="color: #25D366; width: 20px;"></i> <span id="view_phone" style="color: white; font-weight: bold;">-</span></p>
+                    <p style="margin: 0; color: #aaa; font-size: 14px;"><i class="fa-solid fa-location-dot" style="color: #ff007f; width: 20px;"></i> <span id="view_address" style="color: white; font-weight: bold;">-</span></p>
+                </div>
+                
+                <p id="profil-msg" style="margin-top: 20px; color: #25D366; display: none; font-weight: bold;"><i class="fa-solid fa-circle-check"></i> Profil berhasil diperbarui!</p>
+                
+                <button type="button" id="btn-edit-mode" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 25px; background: transparent; border: 2px solid #00d2ff; color: #00d2ff;"><i class="fa-solid fa-pen-to-square"></i> Edit Profil</button>
+            </div>
+
+            <!-- EDIT PROFILE STATE -->
+            <form id="profil-form" style="max-width: 500px; margin: 0 auto; text-align: left; background: #151520; padding: 30px; border-radius: 10px; border: 1px solid #333; display: none;">
                 <div style="text-align: center; margin-bottom: 20px;">
                     <img id="prof_photo_preview" src="https://via.placeholder.com/100" alt="Foto Profil" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #00d2ff; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto;">
                     <label for="prof_photo" style="cursor: pointer; color: #00d2ff; font-size: 14px; text-decoration: underline;">Ubah Foto Profil</label>
@@ -80,9 +97,11 @@
                 <label style="color:#aaa; font-size:14px; margin-bottom:5px; display:block;">Alamat Lengkap</label>
                 <textarea id="prof_address" placeholder="Masukkan alamat lengkap Anda..." style="width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0f; color: white; border: 1px solid #333; border-radius: 5px; height: 100px; resize: vertical;" required></textarea>
                 
-                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;"><i class="fa-solid fa-save"></i> Simpan Profil</button>
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" id="btn-cancel-edit" style="width: 50%; padding: 12px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Batal</button>
+                    <button type="submit" class="btn-primary" style="width: 50%; justify-content: center;"><i class="fa-solid fa-save"></i> Simpan</button>
+                </div>
             </form>
-            <p id="profil-msg" style="margin-top: 15px; color: #25D366; display: none; font-weight: bold;">✅ Profil berhasil diperbarui!</p>
         </div>
     </section>
 
@@ -153,19 +172,54 @@
             if(savedProfile) {
                 try {
                     const data = JSON.parse(savedProfile);
+                    // Populate Form
                     document.getElementById('prof_name').value = data.full_name || '';
                     document.getElementById('prof_phone').value = data.phone || '';
                     document.getElementById('prof_address').value = data.address || '';
+                    
+                    // Populate View
+                    document.getElementById('view_name').innerText = data.full_name || userName;
+                    document.getElementById('view_phone').innerText = data.phone || 'Belum diatur';
+                    document.getElementById('view_address').innerText = data.address || 'Belum diatur';
+
                     if(data.profile_photo) {
                         document.getElementById('prof_photo_preview').src = data.profile_photo;
+                        document.getElementById('view_photo').src = data.profile_photo;
                         localStorage.setItem('profile_photo_' + userName, data.profile_photo);
                     }
-                } catch(e){}
+                    
+                    // Show View Mode
+                    document.getElementById('view-profile-section').style.display = 'block';
+                    document.getElementById('profil-subtitle').innerText = 'Ini adalah tampilan kartu profil digital Anda.';
+                } catch(e){
+                    // Show Edit Mode if error
+                    document.getElementById('profil-form').style.display = 'block';
+                }
+            } else {
+                // If no profile, show Edit Mode so they can create one
+                document.getElementById('profil-form').style.display = 'block';
             }
         } else {
             // Redirect jika belum login
             window.location.href = 'login.html';
         }
+
+        document.getElementById('btn-edit-mode').addEventListener('click', () => {
+            document.getElementById('view-profile-section').style.display = 'none';
+            document.getElementById('profil-form').style.display = 'block';
+            document.getElementById('profil-subtitle').innerText = 'Perbarui informasi dasar Anda di bawah ini.';
+        });
+
+        document.getElementById('btn-cancel-edit').addEventListener('click', () => {
+            const savedProfile = localStorage.getItem('profile_' + userName);
+            if(savedProfile) {
+                document.getElementById('profil-form').style.display = 'none';
+                document.getElementById('view-profile-section').style.display = 'block';
+                document.getElementById('profil-subtitle').innerText = 'Ini adalah tampilan kartu profil digital Anda.';
+            } else {
+                window.location.href = 'index.html'; // Cancel from first time setup
+            }
+        });
 
         document.getElementById('profil-form').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -183,12 +237,23 @@
                 };
                 localStorage.setItem('profile_' + userName, JSON.stringify(profileData));
                 
+                // Update View UI
+                document.getElementById('view_name').innerText = fullName;
+                document.getElementById('view_phone').innerText = phone;
+                document.getElementById('view_address').innerText = address;
+                document.getElementById('view_photo').src = profilePhoto;
+
+                // Switch to View Mode
+                document.getElementById('profil-form').style.display = 'none';
+                document.getElementById('view-profile-section').style.display = 'block';
+                document.getElementById('profil-subtitle').innerText = 'Ini adalah tampilan kartu profil digital Anda.';
+                
+                // Show Success Message in View Mode
                 const msg = document.getElementById('profil-msg');
                 msg.style.display = 'block';
                 setTimeout(() => {
                     msg.style.display = 'none';
-                    window.location.href = 'booking.html'; // Redirect to booking page
-                }, 1500);
+                }, 4000);
             } catch(e) {
                 alert('Terjadi kesalahan penyimpanan.');
             }
