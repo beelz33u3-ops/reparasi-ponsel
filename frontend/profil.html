@@ -190,7 +190,10 @@
                 if(data.success) {
                     const msg = document.getElementById('profil-msg');
                     msg.style.display = 'block';
-                    setTimeout(() => msg.style.display = 'none', 3000);
+                    setTimeout(() => {
+                        msg.style.display = 'none';
+                        window.location.href = 'booking.html'; // Redirect to booking page
+                    }, 1500);
                 } else {
                     alert('Gagal menyimpan profil: ' + data.error);
                 }
